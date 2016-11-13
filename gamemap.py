@@ -14,20 +14,6 @@ CARDINALS = [a for a in range(1, 5)]
 ATTACK = 0
 STOP_ATTACK = 1
 
-class Location:
-    def __init__(self, x=0, y=0):
-        self.x = x
-        self.y = y
-class Site:
-    def __init__(self, owner=0, strength=0, production=0):
-        self.owner = owner
-        self.strength = strength
-        self.production = production
-class Move:
-    def __init__(self, loc=0, direction=0):
-        self.loc = loc
-        self.direction = direction
-
 class GameMap:
     def __init__(self, width = 0, height = 0, numberOfPlayers = 0):
         self.width = width
@@ -91,6 +77,60 @@ class GameMap:
                 else:
                     l.x -= 1
         return l
+
     def getSite(self, l, direction = STILL):
         l = self.getLocation(l, direction)
         return self.contents[l.y][l.x]
+
+    def getDirectionTo(self, from_cell, to_cell):
+        if to_cell.y > from_cell.y:
+            return NORTH
+        elif to_cell.y < from_cell.y:
+            return SOUTH
+        elif to_cell.x < from_cell.x:
+            return EAST
+        elif to_cell.x > from_cell.x:
+            return WEST
+
+        return STILL
+
+
+class Move:
+    def __init__(self, loc=0, direction=0):
+        self.loc = loc
+        self.direction = direction
+
+
+class Location:
+    def __init__(self, x=0, y=0):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return "Location({},{})".format(self.x, self.y)
+
+    def __repr__(self):
+        return self.__str__()
+
+    def __eq__(self, other):
+        """Override the default Equals behavior"""
+        if isinstance(other, self.__class__):
+            return self.__dict__ == other.__dict__
+        return NotImplemented
+
+    def __ne__(self, other):
+        """Define a non-equality test"""
+        if isinstance(other, self.__class__):
+            return not self.__eq__(other)
+        return NotImplemented
+
+    def __hash__(self):
+        """Override the default hash behavior (that returns the id or the object)"""
+        return hash(tuple(sorted(self.__dict__.items())))
+
+
+class Site:
+    def __init__(self, owner=0, strength=0, production=0):
+        self.owner = owner
+        self.strength = strength
+        self.production = production

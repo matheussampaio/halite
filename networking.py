@@ -1,9 +1,10 @@
-from hlt import *
 import socket
 import traceback
 import struct
 from ctypes import *
 import sys
+
+from gamemap import GameMap
 
 _productions = []
 _width = -1
