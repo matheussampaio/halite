@@ -1,9 +1,9 @@
 *.pyc
-*.htl
+*.hlt
 
 .tags
 .tags1
 
 *.log
 
-*.hlt
+.DS_Store
