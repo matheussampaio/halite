@@ -23,7 +23,7 @@ class GameMap:
         for y in range(0, self.height):
             row = []
             for x in range(0, self.width):
-                row.append(Site(0, 0, 0))
+                row.append(Site(0, 0, 0, x, y))
             self.contents.append(row)
 
     def inBounds(self, l):
@@ -82,6 +82,9 @@ class GameMap:
         l = self.getLocation(l, direction)
         return self.contents[l.y][l.x]
 
+    def move(self, loc, direction):
+        self.contents[loc.y][loc.x]
+
     def getDirectionTo(self, from_cell, to_cell):
         if to_cell.y > from_cell.y:
             return NORTH
@@ -130,7 +133,9 @@ class Location:
 
 
 class Site:
-    def __init__(self, owner=0, strength=0, production=0):
+    def __init__(self, owner=0, strength=0, production=0, x = -1, y = -1):
         self.owner = owner
         self.strength = strength
         self.production = production
+        self.x = x
+        self.y = y
